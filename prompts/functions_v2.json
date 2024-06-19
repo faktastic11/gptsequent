@@ -1,0 +1,53 @@
+{
+    "name": "extract_line_items",
+    "description": "You are a financial analyst reading an earnings call. Extract all the metrics discussed in the excerpt below in a list. This includes metrics where there are explicit numbers, or those with general descriptions like “mid single digits.” Include no other data besides the names of the metrics.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "line_items": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "rawLineItem": {
+                            "type": "string",
+                            "description": "Return the name of the financial line item"
+                        },
+                        "rawPeriod": {
+                            "type": "string",
+                            "description": "Return the period being referenced in the sentence (assume \"this quarter\" unless referring expectations or outlook, which would be \"next quarter\" - only use \"this year\" or \"next year\" if the speaker refers to year. Note that saying \"year over year\" or comparing to previous year does not mean the reference period is a year)"
+                        },
+                        "metricType": {
+                            "type": "string",
+                            "enum": [
+                                "guidance",
+                                "retrospective"
+                            ],
+                            "description": "Return whether the metric is guidance or a forward looking statement vs. historical and retrospective"
+                        },
+                        "rawUnit": {
+                            "type": "string",
+                            "description": "Return the unit of the line item (examples: percentage, USD, EUR)"
+                        },
+                        "rawScale": {
+                            "type": "string",
+                            "description": "Return the scale of the line item (examples: thousands, millions, billions, basis points)"
+                        },
+                        "rawLow": {
+                            "type": "string",
+                            "description": "If a range is given, return the low end of the range, if there is no range then return the value of the line item"
+                        },
+                        "rawHigh": {
+                            "type": "string",
+                            "description": "If a range is given return the high end of the range, otherwise return None."
+                        },
+                        "rawTranscriptSourceSentence": {
+                            "type": "string",
+                            "description": "Return the source sentence from the excerpt where the line item and metric are found."
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
